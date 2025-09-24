@@ -36,7 +36,7 @@ function fileToGenerativePart(buffer: Buffer, mimeType: string): Part {
 
 // Set up a simple endpoint for a health check
 app.get('/', (req: Request, res: Response) => {
-    res.status(200).send('Gemini Vision Pro Express server is running!');
+    res.status(200).send('MyDiet Backend is Running');
 });
 
 function cleanGeminiResponse(rawText: string): string {
@@ -58,7 +58,7 @@ app.post('/analyze-food', upload.single('foodImage'), async (req: Request, res: 
 
         const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
-        const prompt = "Analisis gambar makanan ini. Berikan nama makanan, perkiraan jumlah kalori dalam format angka, dan daftar bahan-bahan utamanya. Jawab dalam format JSON saja tanpa teks tambahan.";
+        const prompt = "Analisis gambar makanan ini. Berikan nama makanan, perkiraan jumlah kalori dalam format angka, dan daftar bahan-bahan utamanya. Jawab dalam format JSON saja tanpa teks tambahan dengan attribute jumlah_kalori untuk jumlah kalori, nama_makanan untuk nama makanannya dan bahan_utama untuk bahan. Jika kamu tidak mengetahuinya kirimkan saja string kosong di setiap attribute";
 
         const imagePart = fileToGenerativePart(req.file.buffer, req.file.mimetype);
 
